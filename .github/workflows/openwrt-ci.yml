@@ -207,7 +207,7 @@ jobs:
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Deliver configfile
+      - name: Deliver config
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_config
