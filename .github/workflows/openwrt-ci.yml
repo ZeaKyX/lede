@@ -12,7 +12,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: 0 2 * * *
+    - cron: 0 2 1-31/3 * *
   release:
     types: [published]
 
@@ -59,6 +59,7 @@ jobs:
           git clone https://github.com/tty228/luci-app-serverchan.git
           git clone -b 18.06 https://github.com/garypang13/luci-theme-edge.git
           git clone https://github.com/project-openwrt/luci-app-unblockneteasemusic.git
+          git clone -b master https://github.com/vernesong/OpenClash.git
           cd ..
           cd lean
           rm -rf luci-theme-argon  
@@ -151,6 +152,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-serverchan=y
           CONFIG_PACKAGE_luci-app-unblockneteasemusic=y
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
+          CONFIG_PACKAGE_luci-app-openclash=y
           EOF
           # LuCI主题:
           cat >> .config <<EOF
