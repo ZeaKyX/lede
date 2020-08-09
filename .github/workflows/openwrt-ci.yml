@@ -186,12 +186,6 @@ jobs:
         uses: ZeaKyX/debugger-action@master
         if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
-      - name: Deliver config
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenWrt_config
-          path: ./.config
-
       - name: Make download
         run: |
           make download -j8
@@ -230,7 +224,13 @@ jobs:
         with:
           name: OpenWrt_firmware
           path: ./bin/targets/
-  
+
+      - name: Deliver config
+        uses: actions/upload-artifact@v2
+        with:
+          name: OpenWrt_config
+          path: ./.config
+
       #- name: Upload release asset
       #  if: github.event == 'release'
       #  uses: svenstaro/upload-release-action@v2
