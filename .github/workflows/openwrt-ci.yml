@@ -60,6 +60,7 @@ jobs:
           git clone -b 18.06 https://github.com/garypang13/luci-theme-edge.git
           git clone https://github.com/project-openwrt/luci-app-unblockneteasemusic.git
           git clone -b master https://github.com/vernesong/OpenClash.git
+          git clone https://github.com/ZeaKyX/luci-app-poweroff.git
           cd ..
           cd lean
           rm -rf luci-theme-argon  
@@ -70,6 +71,7 @@ jobs:
       - name: Update feeds
         run: |
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+          sed -i '$a src-git diy https://github.com/firker/diy-ziyong' feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
@@ -153,6 +155,8 @@ jobs:
           CONFIG_PACKAGE_luci-app-unblockneteasemusic=y
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           CONFIG_PACKAGE_luci-app-openclash=y
+          CONFIG_PACKAGE_luci-app-koolproxyR=y
+          CONFIG_PACKAGE_luci-app-poweroff=y
           EOF
           # LuCI主题:
           cat >> .config <<EOF
@@ -182,6 +186,12 @@ jobs:
         uses: ZeaKyX/debugger-action@master
         if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
+      - name: Deliver config
+        uses: actions/upload-artifact@v2
+        with:
+          name: OpenWrt_config
+          path: ./.config
+
       - name: Make download
         run: |
           make download -j8
@@ -209,12 +219,6 @@ jobs:
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Deliver config
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenWrt_config
-          path: ./.config
-
       - name: Deliver package
         uses: actions/upload-artifact@v2
         with:
@@ -227,7 +231,6 @@ jobs:
           name: OpenWrt_firmware
           path: ./bin/targets/
   
-
       #- name: Upload release asset
       #  if: github.event == 'release'
       #  uses: svenstaro/upload-release-action@v2
