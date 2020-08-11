@@ -72,7 +72,7 @@ jobs:
         run: |
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           #sed -i '$a src-git diy https://github.com/firker/diy-ziyong' feeds.conf.default
-          svn co https://github.com/xiaorouji/openwrt-package/trunk/luci-app-koolproxyR package/openwrt-packages/luci-app-koolproxyR
+          svn co https://github.com/firker/diy-ziyong/trunk/luci-app-koolproxyR package/openwrt-packages/luci-app-koolproxyR
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
