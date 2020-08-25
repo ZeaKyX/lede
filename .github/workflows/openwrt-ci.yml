@@ -168,6 +168,7 @@ jobs:
           # 常用软件包:
           cat >> .config <<EOF
           CONFIG_PACKAGE_subconverter=y
+          CONFIG_PACKAGE_luci-mod-rpc=y
           EOF
           #CONFIG_PACKAGE_rapidjson=y
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
@@ -183,7 +184,7 @@ jobs:
 
       - name: SSH connection to Actions
         env:
-          SCKEY: ${{secrets.SCKEY}}
+          #SCKEY: ${{secrets.SCKEY}}
           SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
         uses: ZeaKyX/debugger-action@master
         if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
