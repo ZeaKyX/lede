@@ -8,6 +8,7 @@
 name: OpenWrt-CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -15,9 +16,11 @@ on:
     - cron: 0 2 1-31/3 * *
   release:
     types: [published]
+  watch:
+    types: started
 
 env:
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
 
 jobs:
 
@@ -187,7 +190,7 @@ jobs:
           #SCKEY: ${{secrets.SCKEY}}
           SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
         uses: ZeaKyX/debugger-action@master
-        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
+        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh') || github.event_name == 'watch' || github.event_name == 'workflow_dispatch'
 
       - name: Make download
         run: |
