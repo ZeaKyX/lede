@@ -246,11 +246,22 @@ jobs:
       #    tag: ${{ github.ref }}
       #    file_glob: true
 
-      - name: 通知
+      - name: 定时编译通知
         env:
           SCKEY: ${{secrets.SCKEY}}
+        if: github.event_name == 'schedule'
         run: |
-          send_title="云编译完成"
-          send_content="云编译完成。"
+          send_title="定时云编译完成"
+          send_content="定时云编译完成。"
+          markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
+          curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
+
+      - name: 手动编译通知
+        env:
+          SCKEY: ${{secrets.SCKEY}}
+        if: github.event_name != 'schedule'
+        run: |
+          send_title="手动云编译完成"
+          send_content="手动云编译完成。"
           markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
           curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
