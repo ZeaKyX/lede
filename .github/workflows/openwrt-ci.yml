@@ -9,9 +9,9 @@ name: OpenWrt-CI
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
+  #push:
+  #  branches:
+  #    - master
   schedule:
     - cron: 0 2 1-31/3 * *
   release:
@@ -190,7 +190,7 @@ jobs:
           #SCKEY: ${{secrets.SCKEY}}
           SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
         uses: ZeaKyX/debugger-action@master
-        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh') || github.event_name == 'watch' || github.event_name == 'workflow_dispatch'
+        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh') || github.event_name != 'schedule'
 
       - name: Make download
         run: |
@@ -251,8 +251,8 @@ jobs:
           SCKEY: ${{secrets.SCKEY}}
         if: github.event_name == 'schedule'
         run: |
-          send_title="定时云编译完成"
-          send_content="定时云编译完成。"
+          send_title="x86定时云编译完成"
+          send_content="x86定时云编译完成。"
           markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
           curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
 
@@ -261,7 +261,7 @@ jobs:
           SCKEY: ${{secrets.SCKEY}}
         if: github.event_name != 'schedule'
         run: |
-          send_title="手动云编译完成"
-          send_content="手动云编译完成。"
+          send_title="x86手动云编译完成"
+          send_content="x86手动云编译完成。"
           markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
           curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
