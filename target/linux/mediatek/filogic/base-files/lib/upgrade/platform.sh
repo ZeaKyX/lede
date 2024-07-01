@@ -20,7 +20,8 @@ platform_do_upgrade() {
 		CI_KERNPART="linux"
 		nand_do_upgrade "$1"
 		;;
-	bananapi,bpi-r3)
+	bananapi,bpi-r3|\
+	bananapi,bpi-r4)
 		local rootdev="$(cmdline_get_var root)"
 		rootdev="${rootdev##*/}"
 		rootdev="${rootdev%p[0-9]*}"
@@ -63,7 +64,8 @@ platform_check_image() {
 	[ "$#" -gt 1 ] && return 1
 
 	case "$board" in
-	bananapi,bpi-r3)
+	bananapi,bpi-r3|\
+	bananapi,bpi-r4)
 		[ "$magic" != "d00dfeed" ] && {
 			echo "Invalid image type."
 			return 1
@@ -84,6 +86,13 @@ platform_copy_config() {
 	bananapi,bpi-r3)
 		case "$(cmdline_get_var root)" in
 		/dev/mmc*)
+			emmc_copy_config
+			;;
+		esac
+		;;
+	bananapi,bpi-r4)
+		case "$(platform_get_bootdev)" in
+		mmcblk*)
 			emmc_copy_config
 			;;
 		esac
