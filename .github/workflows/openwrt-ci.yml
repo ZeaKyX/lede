@@ -10,6 +10,8 @@ name: OpenWrt-CI
 on:
   schedule:
     - cron: 0 20 * * *
+  watch:
+    types: started
 
 permissions:
   contents: read
@@ -41,6 +43,12 @@ jobs:
 
       - name: Checkout OpenWrt
         uses: actions/checkout@v3
+          fetch-depth: 0
+
+      - name: cache
+        uses: klever1988/cachewrtbuild@main
+        with:
+          ccache: 'true'
 
       - name: Update feeds
         run: |
@@ -49,7 +57,7 @@ jobs:
           ./scripts/feeds install -a
 
       - name: Generate configuration file
-        run: make defconfig
+        run: echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
 
       - name: Download packages
         run: make download -j16
