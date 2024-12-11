@@ -8,6 +8,12 @@
 name: OpenWrt-CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Debug build'
+        required: false
+        default: 'n'
   schedule:
     - cron: 0 20 * * *
 
@@ -23,6 +29,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          remove-android:       'true'
+          remove-dotnet:        'true'
+          remove-haskell:       'true'
+          remove-codeql:        'true'
+          remove-docker-images: 'true'
+
       - name: Space cleanup and Initialization environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -41,6 +56,13 @@ jobs:
 
       - name: Checkout OpenWrt
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: cache
+        uses: klever1988/cachewrtbuild@main
+        with:
+          ccache: 'true'
 
       - name: Update feeds
         run: |
@@ -49,7 +71,7 @@ jobs:
           ./scripts/feeds install -a
 
       - name: Generate configuration file
-        run: make defconfig
+        run: echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
 
       - name: Download packages
         run: make download -j16
