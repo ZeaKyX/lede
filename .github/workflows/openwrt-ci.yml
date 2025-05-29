@@ -104,7 +104,7 @@ jobs:
           # git clone https://github.com/gngpp/luci-theme-design.git
           # git clone https://github.com/jerrykuku/node-request.git
           # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git
-          # git clone https://github.com/tty228/luci-app-serverchan.git
+          git clone https://github.com/tty228/luci-app-wechatpush
       - name: Update feeds
         run: |
           #grep -q 'helloworld' feeds.conf.default && sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default || echo 'src-git helloworld https://github.com/fw876/helloworld' >> feeds.conf.default
@@ -204,6 +204,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-webadmin=y
           CONFIG_PACKAGE_luci-app-wrtbwmon=y
           CONFIG_PACKAGE_luci-app-serverchan=y
+          CONFIG_PACKAGE_luci-app-wechatpush=y
           CONFIG_PACKAGE_luci-app-pushbot=y
           CONFIG_PACKAGE_luci-app-jd-dailybonus=y
           CONFIG_PACKAGE_luci-app-openclash=y
