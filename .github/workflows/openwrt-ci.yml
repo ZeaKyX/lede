@@ -350,21 +350,21 @@ jobs:
       #    tag: ${{ github.ref }}
       #    file_glob: true
 
-      - name: 定时编译通知
-        env:
-          SCKEY: ${{secrets.SCKEY}}
-        if: github.event_name == 'schedule'
-        run: |
-          send_title="x86定时云编译完成"
-          send_content="x86定时云编译完成。"
-          markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
-          curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
-      - name: 手动编译通知
-        env:
-          SCKEY: ${{secrets.SCKEY}}
-        if: github.event_name != 'schedule'
-        run: |
-          send_title="x86手动云编译完成"
-          send_content="x86手动云编译完成。"
-          markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
-          curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
+      # - name: 定时编译通知
+      #   env:
+      #     SCKEY: ${{secrets.SCKEY}}
+      #   if: github.event_name == 'schedule'
+      #   run: |
+      #     send_title="x86定时云编译完成"
+      #     send_content="x86定时云编译完成。"
+      #     markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
+      #     curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
+      # - name: 手动编译通知
+      #   env:
+      #     SCKEY: ${{secrets.SCKEY}}
+      #   if: github.event_name != 'schedule'
+      #   run: |
+      #     send_title="x86手动云编译完成"
+      #     send_content="x86手动云编译完成。"
+      #     markdown_splitline="%0D%0A%0D%0A---%0D%0A%0D%0A"
+      #     curl -s "http://sc.ftqq.com/${SCKEY}.send?text=${send_title}" -d "&desp=${markdown_splitline}${send_content}"
