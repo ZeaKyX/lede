@@ -80,7 +80,7 @@ jobs:
           mkdir openwrt-packages
           cd openwrt-packages
           # git clone https://github.com/tindy2013/openwrt-subconverter.git
-          git clone -b 18.06 https://github.com/garypang13/luci-theme-edge.git
+          # git clone -b 18.06 https://github.com/garypang13/luci-theme-edge.git
           git clone --branch master https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
           # git clone -b master https://github.com/vernesong/OpenClash.git
           # mkdir luci-app-openclash
@@ -100,7 +100,7 @@ jobs:
           cd ..
           cd lean
           # rm -rf luci-theme-argon
-          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+          git clone https://github.com/jerrykuku/luci-theme-argon.git
           # git clone https://github.com/gngpp/luci-theme-design.git
           # git clone https://github.com/jerrykuku/node-request.git
           # git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git
@@ -230,6 +230,7 @@ jobs:
           # 常用软件包:
           cat >> .config <<EOF
           CONFIG_PACKAGE_adb=y
+          CONFIG_PACKAGE_msmtp=y
           CONFIG_PACKAGE_openssh-client=y
           CONFIG_PACKAGE_openssh-keygen=y
           CONFIG_PACKAGE_luci-mod-rpc=y
