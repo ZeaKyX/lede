@@ -39,20 +39,20 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
 
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          remove-android:       'true'
-          remove-dotnet:        'true'
-          remove-haskell:       'true'
-          remove-codeql:        'true'
-          remove-docker-images: 'true'
+      # - name: Maximize build space
+      #   uses: easimon/maximize-build-space@master
+      #   with:
+      #     remove-android:       'true'
+      #     remove-dotnet:        'true'
+      #     remove-haskell:       'true'
+      #     remove-codeql:        'true'
+      #     remove-docker-images: 'true'
 
       - name: Space cleanup and Initialization environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          # docker image prune -f
+          docker image prune -f
           sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
           sudo -E apt-mark hold grub-efi-amd64-signed
           sudo -E apt update
