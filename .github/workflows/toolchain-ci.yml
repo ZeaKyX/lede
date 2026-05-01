@@ -262,12 +262,12 @@ jobs:
           du -ah --max-depth=1 ./package
           du -ah --max-depth=1 ./package/openwrt-packages
           du -ah --max-depth=1 ./package/lean
-      - name: SSH connection to Actions
-        env:
-          #SCKEY: ${{secrets.SCKEY}}
-          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
-        uses: ZeaKyX/debugger-action@master
-        if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh') || github.event_name != 'schedule' && github.event.inputs.debug == 'n'
+      # - name: SSH connection to Actions
+      #   env:
+      #     #SCKEY: ${{secrets.SCKEY}}
+      #     SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+      #   uses: ZeaKyX/debugger-action@master
+      #   if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh') || github.event_name != 'schedule' && github.event.inputs.debug == 'n'
 
       - name: Download packages
         run: |
@@ -316,12 +316,12 @@ jobs:
           du -ah --max-depth=1 ./ --exclude=build_dir --exclude=bin
           du -ah --max-depth=1 ./build_dir
           du -ah --max-depth=1 ./bin
-      - name: SSH debug
-        env:
-          #SCKEY: ${{secrets.SCKEY}}
-          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
-        uses: ZeaKyX/debugger-action@master
-        if: github.event.inputs.debug == 'y'
+      # - name: SSH debug
+      #   env:
+      #     #SCKEY: ${{secrets.SCKEY}}
+      #     SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+      #   uses: ZeaKyX/debugger-action@master
+      #   if: github.event.inputs.debug == 'y'
 
       # - name: Prepare artifact
       #   run: |
