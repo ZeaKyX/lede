@@ -46,6 +46,7 @@ define Package/netifd/install
 	$(CP) \
 		$(PKG_BUILD_DIR)/scripts/utils.sh \
 		$(PKG_BUILD_DIR)/scripts/netifd-proto.sh \
+		$(PKG_BUILD_DIR)/scripts/netifd-wireless.sh \
 		$(1)/lib/netifd/
 endef
 
